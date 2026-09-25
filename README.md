@@ -48,15 +48,19 @@ For the paper's coil (160 mm, 5 turns, 4 × 4 strands of 0.8 mm), LitzGen predic
 
 ## Using the dialog
 
-The dialog opens with the paper's Table I values. If the board already has a LitzGen coil, it opens with that coil's parameters instead; they are stored inside the coil's group.
+The dialog opens with the paper's Table I values. If the board already has a LitzGen coil, it opens with that coil's parameters instead; they are stored inside the coil's group. The line under the title says whether you are editing a coil on the board or creating a new one.
+
+Parameters are grouped into tabs (Coil, Strands & Layers, Transposition & Vias, Terminals & Board, Simulation); hover over a field for an explanation. A field with an invalid value turns its label red, and the status line under the tabs explains what is wrong.
 
 | Button | What it does |
 | --- | --- |
-| Check DRC | Generates the coil in memory and checks strand-to-strand and hole-to-hole clearance |
-| Generate | Places the coil, or replaces the one already on the board with the same group name. Adds In1/In2… copper layers if needed |
-| Simulate | Runs in the background, then writes `<group>_report.html` next to the board and opens it |
-| Export FastHenry / openEMS | Writes solver input files |
-| Remove coil | Deletes every item in the coil's group |
+| Place Coil / Update Coil | Places the coil, or replaces the one already on the board with the same group name. Adds In1/In2… copper layers if needed. Asks before placing a coil that has clearance violations. This is the default button (Return) |
+| Check Clearances | Generates the coil in memory and checks strand-to-strand and hole-to-hole clearance |
+| Simulate | Runs in the background with a progress bar and Cancel, writes `<group>_report.html` next to the board, and shows the results in the status line with an **Open Report** button |
+| More ▾ | Load / Save Parameters (JSON), Export FastHenry / openEMS Script, Reset to Paper Defaults |
+| Remove Coil | Asks for confirmation, then deletes every item in the coil's group |
+
+The **Activity log** under the status line keeps the details: via counts, the first clearance violations, and error tracebacks.
 
 By default every strand is on one net (`LITZ1`) and the two terminal bars are THT footprints. **One net per strand** gives each strand its own net and leaves out the terminals. Use it on a throwaway board so that KiCad's own DRC can independently confirm there are no shorts between strands.
 

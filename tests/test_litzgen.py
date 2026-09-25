@@ -261,9 +261,17 @@ if __name__ == "__main__":
 
 class TestPcbnewWriterWithFake(unittest.TestCase):
     def test_place_regenerate_remove(self):
+        self._place_regenerate_remove(kicad10_groups=False)
+
+    def test_place_regenerate_remove_kicad10_groups(self):
+        # KiCad 10: GetParentGroup() returns an EDA_GROUP without m_Uuid
+        self._place_regenerate_remove(kicad10_groups=True)
+
+    def _place_regenerate_remove(self, kicad10_groups):
         import importlib
         sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         fake = importlib.import_module("fake_pcbnew")
+        fake.EDA_GROUP_PARENTS = kicad10_groups
         sys.modules["pcbnew"] = fake
         try:
             W = importlib.import_module("litzgen.kicad.pcbnew_writer")
@@ -287,6 +295,7 @@ class TestPcbnewWriterWithFake(unittest.TestCase):
             self.assertEqual(removed, total - 1)
             self.assertEqual(b.items, [])
         finally:
+            fake.EDA_GROUP_PARENTS = False
             del sys.modules["pcbnew"]
 
 
