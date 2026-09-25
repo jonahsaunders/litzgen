@@ -288,3 +288,23 @@ class TestPcbnewWriterWithFake(unittest.TestCase):
             self.assertEqual(b.items, [])
         finally:
             del sys.modules["pcbnew"]
+
+
+class TestPcmMetadata(unittest.TestCase):
+    """metadata.json must satisfy KiCad's PCM schema (https://go.kicad.org/pcm/schemas/v1),
+    or Plugin and Content Manager refuses the package ("Unable to parse package metadata")."""
+
+    def test_schema_patterns(self):
+        import re
+        root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        meta = json.load(open(os.path.join(root, "metadata.json"), encoding="utf-8"))
+        for key in ("name", "description", "description_full", "identifier", "type",
+                    "author", "license", "resources", "versions"):
+            self.assertIn(key, meta)
+        self.assertRegex(meta["identifier"], r"^[a-zA-Z][-a-zA-Z0-9.]{0,98}[a-zA-Z0-9]$")
+        self.assertTrue(meta["tags"])
+        self.assertEqual(len(meta["tags"]), len(set(meta["tags"])))
+        for tag in meta["tags"]:
+            self.assertRegex(tag, r"^[a-z][-a-z0-9]{0,48}[a-z0-9]$")
+        from litzgen import __version__
+        self.assertRegex(__version__, r"^\d{1,4}(\.\d{1,4}(\.\d{1,6})?)?$")

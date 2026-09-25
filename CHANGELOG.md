@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 (2026-09-25)
+
+- Fix KiCad Plugin and Content Manager rejecting the package ("Unable to parse package metadata"): the `wireless power` tag is now `wireless-power`, as PCM tags may not contain spaces
+
 ## 1.0.1 (2026-09-25)
 
 - Fix repository links to point at jonahsaunders/litzgen
