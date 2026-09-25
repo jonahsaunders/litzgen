@@ -45,6 +45,11 @@ jobs:
             cat build.txt
             echo '```'
           } > notes.md
-          gh release create "$GITHUB_REF_NAME" \
-            dist/litzgen-pcm.zip "dist/litzgen-pcm-$VER.zip" dist/paper_coil.kicad_pcb \
-            --title "LitzGen $VER" --notes-file notes.md --generate-notes
+          FILES=(dist/litzgen-pcm.zip "dist/litzgen-pcm-$VER.zip" dist/paper_coil.kicad_pcb)
+          if gh release view "$GITHUB_REF_NAME" > /dev/null 2>&1; then
+            # Release already exists (e.g. created from the GitHub Releases page): attach the files.
+            gh release upload "$GITHUB_REF_NAME" "${FILES[@]}" --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" "${FILES[@]}" \
+              --title "LitzGen $VER" --notes-file notes.md --generate-notes
+          fi

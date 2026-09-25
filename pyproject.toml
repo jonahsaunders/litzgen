@@ -22,8 +22,8 @@ classifiers = [
 fast = ["scipy"]
 
 [project.urls]
-Homepage = "https://github.com/jonahbsaunders/litzgen"
-Releases = "https://github.com/jonahbsaunders/litzgen/releases"
+Homepage = "https://github.com/jonahsaunders/litzgen"
+Releases = "https://github.com/jonahsaunders/litzgen/releases"
 
 [project.scripts]
 litzgen = "litzgen.cli:main"

@@ -3,17 +3,17 @@
   "name": "LitzGen - PCB Litz coil generator",
   "description": "Generate, check and simulate transposed multi-layer PCB Litz coils.",
   "description_full": "LitzGen generates concentric multi-bundle PCB Litz coils (the dual-bundle 4-layer architecture of Kale & Wicht, WPTCE 2026, and its generalisation to any layer and column count) as tracks, arcs and blind/buried vias. It checks strand-to-strand clearance itself, simulates inductance, AC resistance (skin, proximity, via losses), Q and strand current sharing, and exports FastHenry and openEMS models. Requires numpy in KiCad's Python.",
-  "identifier": "com.github.jonahbsaunders.litzgen",
+  "identifier": "com.github.jonahsaunders.litzgen",
   "type": "plugin",
   "author": {
     "name": "Jonah Saunders",
     "contact": {
-      "web": "https://github.com/jonahbsaunders"
+      "web": "https://github.com/jonahsaunders"
     }
   },
   "license": "MIT",
   "resources": {
-    "homepage": "https://github.com/jonahbsaunders/litzgen"
+    "homepage": "https://github.com/jonahsaunders/litzgen"
   },
   "tags": [
     "coil",

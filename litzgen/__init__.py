@@ -3,7 +3,7 @@
 Inside KiCad's pcbnew this package registers an action plugin; elsewhere it
 is a plain library / CLI (``python -m litzgen --help``).
 """
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 try:  # register only inside pcbnew with a GUI
     import pcbnew  # noqa: F401
