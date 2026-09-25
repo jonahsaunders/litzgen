@@ -1,17 +1,17 @@
 # LitzGen: multi-bundle PCB Litz coils for KiCad
 
-[![CI](https://github.com/jonahbsaunders/litzgen/actions/workflows/ci.yml/badge.svg)](https://github.com/jonahbsaunders/litzgen/actions/workflows/ci.yml)
-[![Latest release](https://img.shields.io/github/v/release/jonahbsaunders/litzgen?label=release)](https://github.com/jonahbsaunders/litzgen/releases/latest)
+[![CI](https://github.com/jonahsaunders/litzgen/actions/workflows/ci.yml/badge.svg)](https://github.com/jonahsaunders/litzgen/actions/workflows/ci.yml)
+[![Latest release](https://img.shields.io/github/v/release/jonahsaunders/litzgen?label=release)](https://github.com/jonahsaunders/litzgen/releases/latest)
 [![KiCad 8 | 9](https://img.shields.io/badge/KiCad-8%20%7C%209-314cb0)](https://www.kicad.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 LitzGen is a KiCad PCB-editor plugin. It generates transposed multilayer PCB Litz coils, places them on your board and simulates them. It covers the dual-bundle 4-layer coil from Kale & Wicht ([WPTCE 2026](https://doi.org/10.1109/WPTCE66920.2026.11691238)) and generalises it to any number of layers, strands per layer and concentric bundles.
 
-**[Download the KiCad plugin](https://github.com/jonahbsaunders/litzgen/releases/latest/download/litzgen-pcm.zip)** · [Install steps](#install-the-kicad-plugin) · [Design notes](docs/DESIGN.md)
+**[Download the KiCad plugin](https://github.com/jonahsaunders/litzgen/releases/latest/download/litzgen-pcm.zip)** · [Install steps](#install-the-kicad-plugin) · [Design notes](docs/DESIGN.md)
 
 ## Install the KiCad plugin
 
-### ➜ [**Download `litzgen-pcm.zip`** (latest release)](https://github.com/jonahbsaunders/litzgen/releases/latest/download/litzgen-pcm.zip)
+### ➜ [**Download `litzgen-pcm.zip`** (latest release)](https://github.com/jonahsaunders/litzgen/releases/latest/download/litzgen-pcm.zip)
 
 1. Download **`litzgen-pcm.zip`** from the link above. Don't unzip it.
 2. In KiCad 8 or 9, open **Plugin and Content Manager** and click **Install from File…** at the bottom left. Select the zip.
@@ -23,9 +23,9 @@ LitzGen is a KiCad PCB-editor plugin. It generates transposed multilayer PCB Lit
 
 scipy is optional. If it's installed, LitzGen uses it for faster neighbour searches.
 
-Every release is listed on the [Releases page](https://github.com/jonahbsaunders/litzgen/releases). Each one has `litzgen-pcm.zip`, a copy with the version number in its name, and an example board (`paper_coil.kicad_pcb`).
+Every release is listed on the [Releases page](https://github.com/jonahsaunders/litzgen/releases). Each one has `litzgen-pcm.zip`, a copy with the version number in its name, and an example board (`paper_coil.kicad_pcb`).
 
-> **Status (v1.0.0):** Generation, DRC and simulation are covered by the automated tests. The pcbnew front-end has so far only been run against a stand-in for KiCad's Python module. Please [open an issue](https://github.com/jonahbsaunders/litzgen/issues/new?template=bug_report.md) if anything misbehaves in your KiCad version.
+> **Status:** Generation, DRC and simulation are covered by the automated tests. The pcbnew front-end has so far only been run against a stand-in for KiCad's Python module. Please [open an issue](https://github.com/jonahsaunders/litzgen/issues/new?template=bug_report.md) if anything misbehaves in your KiCad version.
 
 ## What it does
 
@@ -63,7 +63,7 @@ By default every strand is on one net (`LITZ1`) and the two terminal bars are TH
 ## Command line (no KiCad needed)
 
 ```bash
-pip install "litzgen @ git+https://github.com/jonahbsaunders/litzgen"     # or: python -m pip install .
+pip install "litzgen @ git+https://github.com/jonahsaunders/litzgen"     # or: python -m pip install .
 litzgen params > coil.json                                   # paper defaults as JSON
 litzgen generate -p coil.json -o coil.kicad_pcb --drc
 litzgen simulate -p coil.json --sweep --report coil.html --json result.json

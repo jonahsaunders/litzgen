@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.1 (2026-09-25)
+
+- Fix repository links to point at jonahsaunders/litzgen
+
 ## 1.0.0 (2026-09-25)
 
 First public release.
