@@ -1,0 +1,47 @@
+{
+  "d_out": 160.0,
+  "n_turns": 5.0,
+  "turn_gap": null,
+  "d_in": 69.0,
+  "clockwise": false,
+  "center_x": 100.0,
+  "center_y": 100.0,
+  "start_angle_deg": 0.0,
+  "n_cols": 4,
+  "strand_width": 0.8,
+  "strand_gap": 0.2,
+  "stackup": {
+    "n_layers": 4,
+    "copper_thickness": 0.07,
+    "dielectric": [
+      0.4,
+      0.5,
+      0.4
+    ],
+    "kicad_layers": [
+      "F.Cu",
+      "In1.Cu",
+      "In2.Cu",
+      "B.Cu"
+    ]
+  },
+  "steps_per_turn": 24,
+  "stagger_alternate_turns": false,
+  "jog_width": null,
+  "clearance": 0.127,
+  "hole_clearance": 0.2,
+  "via": {
+    "drill": 0.2,
+    "pad": 0.45,
+    "plating": 0.02,
+    "filled": true
+  },
+  "omit_rings": [],
+  "terminal_margin_deg": 6.0,
+  "terminal_length": 6.0,
+  "terminal_drill": 1.2,
+  "max_arc_deg": 10.0,
+  "net_prefix": "LITZ1",
+  "per_strand_nets": false,
+  "group_name": "LitzCoil"
+}

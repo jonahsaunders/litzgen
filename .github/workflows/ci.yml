@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: tests (Python ${{ matrix.python }}${{ matrix.scipy == 'no' && ', numpy only' || '' }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.9", "3.11", "3.12", "3.13"]
+        scipy: ["yes"]
+        include:
+          - python: "3.11"      # KiCad's bundled Python often has numpy but not scipy
+            scipy: "no"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy
+          if [ "${{ matrix.scipy }}" = "yes" ]; then python -m pip install scipy; fi
+      - name: Unit tests
+        run: python -m unittest discover -s tests -v
+      - name: CLI smoke test
+        run: |
+          python -m litzgen generate --drc --strict -o paper_coil.kicad_pcb
+          python -m litzgen export fasthenry -o paper_coil.inp
+      - name: Build KiCad package
+        run: python build_pcm.py
+      - uses: actions/upload-artifact@v4
+        if: matrix.python == '3.11' && matrix.scipy == 'yes'
+        with:
+          name: litzgen-pcm
+          path: dist/litzgen-pcm.zip

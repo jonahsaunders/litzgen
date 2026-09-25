@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+*.kicad_pcb-bak
+*-backups/
+fp-info-cache
+*_sim/
+*_report.html
+.DS_Store
