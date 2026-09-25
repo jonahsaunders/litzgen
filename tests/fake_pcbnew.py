@@ -33,6 +33,21 @@ class LSET:
         return set(range(n))
 
 
+EDA_GROUP_PARENTS = False   # True: GetParentGroup() returns an EDA_GROUP view, as in KiCad 10
+
+
+class EDA_GROUP:
+    """What KiCad 10's GetParentGroup() returns: no m_Uuid; the board item is AsEdaItem()."""
+    def __init__(self, group):
+        self._g = group
+
+    def AsEdaItem(self):
+        return self._g
+
+    def GetName(self):
+        return self._g.GetName()
+
+
 class _Item:
     def __init__(self, board=None):
         self.m_Uuid = KIID()
@@ -41,6 +56,8 @@ class _Item:
         self.layer = None
 
     def GetParentGroup(self):
+        if self._group is not None and EDA_GROUP_PARENTS:
+            return EDA_GROUP(self._group)
         return self._group
 
     def SetLayer(self, l):
@@ -94,6 +111,11 @@ class PCB_GROUP(_Item):
     def RemoveItem(self, it):
         self.items.remove(it)
         it._group = None
+
+    def RemoveAll(self):
+        for it in self.items:
+            it._group = None
+        self.items = []
 
 
 class NETINFO_ITEM:
@@ -152,7 +174,7 @@ class BOARD:
         else:
             self.items.append(it)
 
-    def Remove(self, it): self.items.remove(it)
+    def Delete(self, it): self.items.remove(it)
     def Groups(self): return [i for i in self.items if isinstance(i, PCB_GROUP)]
     def GetTracks(self): return [i for i in self.items if isinstance(i, (PCB_TRACK, PCB_VIA))]
     def GetFootprints(self): return [i for i in self.items if isinstance(i, FOOTPRINT)]

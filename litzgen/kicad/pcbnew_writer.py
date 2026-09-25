@@ -81,9 +81,19 @@ def _cast(item):
         return item
 
 
+def _uuid(obj) -> str:
+    """UUID of a group or item. KiCad 10's GetParentGroup() returns an EDA_GROUP, which has
+    no m_Uuid of its own; the board item behind it is AsEdaItem()."""
+    uid = getattr(obj, "m_Uuid", None)
+    if uid is None:
+        uid = obj.AsEdaItem().m_Uuid
+    return uid.AsString()
+
+
 def _group_members(board, group) -> list:
     """Items of a group (via GetParentGroup, which is reliable across SWIG versions)."""
     out = []
+    gid = _uuid(group)
     pools = [board.GetTracks(), board.GetFootprints(), board.GetDrawings()]
     for pool in pools:
         for it in pool:
@@ -91,7 +101,7 @@ def _group_members(board, group) -> list:
                 pg = it.GetParentGroup()
             except Exception:
                 pg = None
-            if pg is not None and pg.m_Uuid.AsString() == group.m_Uuid.AsString():
+            if pg is not None and _uuid(pg) == gid:
                 out.append(it)
     return out
 
@@ -119,13 +129,19 @@ def remove_coil(board, group_name: str) -> int:
     if g is None:
         return 0
     items = _group_members(board, g)
+    try:
+        g.RemoveAll()
+    except AttributeError:
+        for it in items:
+            try:
+                g.RemoveItem(it)
+            except Exception:
+                pass
+    # Delete, not Remove: after Remove() Python owns each item, and in KiCad 10 freeing those
+    # wrappers corrupts pcbnew's SWIG state (later calls return bare SwigPyObjects).
     for it in items:
-        try:
-            g.RemoveItem(it)
-        except Exception:
-            pass
-        board.Remove(it)
-    board.Remove(g)
+        board.Delete(it)
+    board.Delete(g)
     return len(items)
 
 
